@@ -30,6 +30,8 @@ jobs:
 
     - name: Install Terraform
       uses: little-core-labs/install-terraform@v1
+
+    - name: Terraform Init
       run: terraform init ./src/github.com/${{ github.repository }}/_build/deploy
 
     - name: Terraform Plan
