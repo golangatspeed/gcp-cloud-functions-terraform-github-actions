@@ -32,10 +32,8 @@ jobs:
       uses: little-core-labs/install-terraform@v1
 
     - name: Terraform Plan & Apply
-      with:
-        CREDENTIALS: ${{secrets.gcp_service_account}}
-     ## with: ./src/github.com/${{ github.repository }}/_build/deploy
+      with: ./src/github.com/${{ github.repository }}/_build/deploy
       run: |
         terraform init
-        terraform plan -var="credentials_file=$CREDENTIALS"
-        terraform apply -var="credentials_file=$CREDENTIALS" -auto-approve
+        terraform plan -var="credentials_file=${{ secrets.gcp_service_account }}"
+        terraform apply -var="credentials_file=${{ secrets.gcp_service_account }}" -auto-approve
