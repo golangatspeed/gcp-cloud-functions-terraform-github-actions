@@ -30,7 +30,7 @@ variable "service" {
 
 variable "functions" {
   description  = "Functions contained in this repository"
-  type    = "map"
+  type    = map(string)
   default = {
     "hello" = "TestHello"
     "bye" = "TestBye"

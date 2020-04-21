@@ -31,11 +31,11 @@ jobs:
     - name: Install Terraform
       uses: little-core-labs/install-terraform@v1
 
-    - name: Terraform Init
-      run: terraform init ./src/github.com/${{ github.repository }}/_build/deploy
-
-    - name: Terraform Plan
-      run: terraform plan ./src/github.com/${{ github.repository }}/_build/deploy
-
-    - name: Terraform Apply
-      run: terraform apply -auto-approve ./src/github.com/${{ github.repository }}/_build/deploy
+    - name: Terraform Plan & Apply
+      with: |
+        ./src/github.com/${{ github.repository }}//_build/deploy
+       CREDENTIALS: ${{ secrets.gcp_service_account}}
+      run: |
+        terraform init
+        terraform plan -var="credentials_file=$CREDENTIALS"
+        terraform apply -var="credentials_file=$CREDENTIALS" -auto-approve
