@@ -1,5 +1,5 @@
 variable "credentials_file" {
-  default = "../../../../Credentials/GCP/terraform-service-account.json"
+  default = file("../../../../Credentials/GCP/terraform-service-account.json")
 }
 
 variable "project" {
