@@ -34,5 +34,5 @@ jobs:
     - name : Terraform Apply
       run: |
         terraform init ./src/github.com/${{ github.repository }}/_build/deploy
-        terraform plan ./src/github.com/${{ github.repository }}/_build/deploy"
-        terraform apply -var="credentials_file=${{ secrets.gcp_service_account }}" -auto-approve ./src/github.com/${{ github.repository }}/_build/deploy
+        terraform plan ./src/github.com/${{ github.repository }}/_build/deploy
+        terraform apply -auto-approve -var="credentials_file=${{ secrets.gcp_service_account }}" ./src/github.com/${{ github.repository }}/_build/deploy
