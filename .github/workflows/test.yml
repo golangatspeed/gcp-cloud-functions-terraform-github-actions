@@ -30,7 +30,8 @@ jobs:
 
     - name: Install Terraform
       uses: little-core-labs/install-terraform@v1
-    ##- name: Terraform Plan & Apply
+
+    -name : Set Terraform path
       with: ./src/github.com/${{ github.repository }}/_build/deploy
 
     - name : Terraform Apply
