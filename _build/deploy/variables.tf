@@ -1,6 +1,8 @@
 variable "credentials_file" {
   description = "Our GCP credentials (not a file anymore)"
   //default = "../../../../Credentials/GCP/terraform-service-account.json"
+
+
 }
 
 variable "project" {
