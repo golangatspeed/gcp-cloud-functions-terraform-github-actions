@@ -11,15 +11,30 @@ jobs:
         platform: [ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     steps:
+
     - name: Install Go
       uses: actions/setup-go@v1
       with:
         go-version: ${{ matrix.go-version }}
+
     - name: Checkout code
       uses: actions/checkout@v2
       with:
         path: ./src/github.com/${{ github.repository }}
+
     - name: Get dependencies
       run: go get -v -u ./...
+
     - name: Run unit tests
       run: go test -cover ./...
+
+    - name: Install Terraform
+      uses: little-core-labs/install-terraform@v1
+      with:
+        path: ./src/github.com/${{ github.repository }}/_build/deploy
+
+    - name: Terraform Plan
+      run: terraform apply
+
+    - name: Terraform Apply
+      run: terraform apply -auto-approve

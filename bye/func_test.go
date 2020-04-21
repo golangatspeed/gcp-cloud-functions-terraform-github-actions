@@ -5,7 +5,7 @@ import "testing"
 
 func TestTestable(t *testing.T) {
 	res:= MyTestable()
-	if res != 2 {
+	if res != 3 {
 		t.Error("wrong answer")
 	}
 }
