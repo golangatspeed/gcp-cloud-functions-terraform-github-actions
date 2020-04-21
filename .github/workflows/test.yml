@@ -12,9 +12,14 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: ${{ matrix.go-version }}
+    - name: Setup Go environment
+      run: |
+        echo "::set-env name=GOPATH::$(dirname $GITHUB_WORKSPACE)"
+        echo "::add-path::$(dirname $GITHUB_WORKSPACE)/bin"
+      shell: bash
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Get dependencies
-      run: go mod vendor
-    - name: Test
+      run: go get -v -u ./...
+    - name: Run unit tests
       run: go test -cover ./...
