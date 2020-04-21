@@ -33,7 +33,7 @@ jobs:
 
     - name: Terraform Plan & Apply
       with: |
-        ./src/github.com/${{ github.repository }}//_build/deploy
+        ./src/github.com/${{ github.repository }}/_build/deploy
        CREDENTIALS: ${{ secrets.gcp_service_account}}
       run: |
         terraform init
