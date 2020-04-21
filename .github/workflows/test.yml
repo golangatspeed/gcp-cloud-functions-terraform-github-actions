@@ -32,7 +32,7 @@ jobs:
       uses: little-core-labs/install-terraform@v1
 
     - name: Terraform Plan
-      run: terraform plan ./_build/deploy
+      run: terraform plan ./src/github.com/${{ github.repository }}/_build/deploy
 
     - name: Terraform Apply
-      run: terraform apply -auto-approve /_build/deploy
+      run: terraform apply -auto-approve ./src/github.com/${{ github.repository }}/_build/deploy
