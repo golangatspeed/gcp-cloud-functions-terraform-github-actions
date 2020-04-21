@@ -33,9 +33,9 @@ jobs:
 
     - name: Terraform Plan & Apply
       with: |
-        ./src/github.com/${{ github.repository }}/_build/deploy
+       PATH: "./src/github.com/${{ github.repository }}/_build/deploy"
        CREDENTIALS: ${{ secrets.gcp_service_account}}
       run: |
         terraform init
-        terraform plan -var="credentials_file=$CREDENTIALS"
-        terraform apply -var="credentials_file=$CREDENTIALS" -auto-approve
+        terraform plan -var="credentials_file=$CREDENTIALS" $PATH
+        terraform apply -var="credentials_file=$CREDENTIALS" -auto-approve $PATH
