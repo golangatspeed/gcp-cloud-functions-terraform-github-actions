@@ -15,9 +15,6 @@ jobs:
       uses: actions/setup-go@v1
       with:
         go-version: ${{ matrix.go-version }}
-    - name: Setup Go environment
-
-      shell: bash
     - name: Checkout code
       uses: actions/checkout@v2
       with:
