@@ -37,7 +37,7 @@ jobs:
     - name: Terraform Plan
       run: terraform plan -var="credentials_file=${{ secrets.gcp_service_account }}" ./src/github.com/${{ github.repository }}/_build/deploy
 
-     - name: Terraform Apply
+    - name: Terraform Apply
       run: terraform apply -auto-approve -var="credentials_file=${{ secrets.gcp_service_account }}" ./src/github.com/${{ github.repository }}/_build/deploy
 
       ## integration tests
