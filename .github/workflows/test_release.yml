@@ -51,8 +51,8 @@ jobs:
     ## run an integration tests step, against the created endpoints (outputs vars from earlier steps? (todo)
 
     ## destroy the stage after successful integration tests (todo)
-    - name: Terraform Destroy (Stage)
-      run: terraform destroy -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+    ##- name: Terraform Destroy (Stage)
+    ##  run: terraform destroy -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
 
     ## deploy to production (todo)
 
