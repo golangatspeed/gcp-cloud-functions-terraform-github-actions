@@ -7,7 +7,7 @@ jobs:
       GO111MODULE: off
     strategy:
       matrix:
-        go-version: [1.14.x]
+        go-version: [1.13.x]
         platform: [ubuntu-latest]
     runs-on: ${{ matrix.platform }}
     steps:
@@ -32,7 +32,7 @@ jobs:
       uses: little-core-labs/install-terraform@v1
 
     - name: Terraform Init
-      run: terraform init ./src/github.com/${{ github.repository }}/_build/deploy
+      run: terraform init -backend-config='${{ secrets.gcp_service_account }}' ./src/github.com/${{ github.repository }}/_build/deploy
 
     - name: Terraform Plan
       run: terraform plan -var='credentials_file=${{ secrets.gcp_service_account }}' ./src/github.com/${{ github.repository }}/_build/deploy
@@ -42,5 +42,7 @@ jobs:
 
       ## integration tests
       ##
+
+
 
 

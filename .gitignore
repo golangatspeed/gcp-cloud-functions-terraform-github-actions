@@ -2,3 +2,5 @@
 .idea/*
 _build/env/*
 _build/deploy/archive/*
+terraform.tfstate
+terraform.tfstate.backup

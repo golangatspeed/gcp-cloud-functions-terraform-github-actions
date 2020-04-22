@@ -1,8 +1,6 @@
 variable "credentials_file" {
   description = "Our GCP credentials (not a file anymore)"
-  //default = "../../../../Credentials/GCP/terraform-service-account.json"
-
-
+  default = "/Users/olliephillips/Dropbox/Teet Lab/credentials/gcp/terraform-service-account.json"
 }
 
 variable "project" {
@@ -18,7 +16,7 @@ variable "zone" {
 }
 
 variable "runtime" {
-  default = "go111"
+  default = "go113"
 }
 
 variable "bucket_name" {

@@ -4,7 +4,6 @@ provider "google" {
   project = var.project
   region = var.region
   zone = var.zone
-
 }
 
 // clean up
@@ -29,7 +28,11 @@ data "archive_file" "zip_step" {
   output_path = "${path.module}/archive/${each.key}.zip"
 }
 
-// create bucket
+// create bucket(s)
+resource "google_storage_bucket" "state" {
+  name = "tf-state-${var.service}"
+}
+
 resource "google_storage_bucket" "bucket" {
   name = var.bucket_name
 }
