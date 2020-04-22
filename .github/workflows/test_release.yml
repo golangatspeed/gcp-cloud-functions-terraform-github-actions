@@ -38,7 +38,7 @@ jobs:
     - name: Install Terraform
       uses: little-core-labs/install-terraform@v1
       with:
-        - version: 0.12.24
+        version: 0.12.24
 
     - name: Terraform Init
       run: terraform init -backend-config='credentials=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
