@@ -1,0 +1,55 @@
+name: Test & Release
+
+on: [push] ## we should add 'pull_request' but needs more thought on the secrets
+
+jobs:
+
+  check:
+    env:
+      GOPATH: ${{ github.workspace }}
+      GO111MODULE: off
+      TF_MODULE_PATH: ./src/github.com/${{ github.repository }}/_build/deploy
+
+    strategy:
+      matrix:
+        go-version: [1.13.x]
+        platform: [ubuntu-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+    ## get Go, checkout the package and download the dependencies
+    - name: Install Go
+      uses: actions/setup-go@v1
+      with:
+        go-version: ${{ matrix.go-version }}
+    - name: Checkout code
+      uses: actions/checkout@v2
+      with:
+        path: ./src/github.com/${{ github.repository }}
+    - name: Get dependencies
+      run: go get -v -u ./...
+
+    ## run the function package unit tests (we should do more with the coverage piece here?)
+    - name: Run unit tests
+      run: go test -cover ./...
+
+    ## deploy to a stage env, we need Terraform
+    - name: Install Terraform
+      uses: little-core-labs/install-terraform@v1
+    - name: Terraform Init
+      run: terraform init -backend-config='credentials=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+    - name: Terraform Plan
+      run: terraform plan -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+    - name: Terraform Apply
+      run: terraform apply -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+
+    ## run an integration tests step, against the created endpoints (outputs vars from earlier steps? (todo)
+
+    ## destroy the stage after successful integration tests (todo)
+    - name: Terraform Destroy (Stage)
+      run: terraform destroy -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+
+    ## deploy to production (todo)
+
+    ## log/notify wherever/whoever (todo)
