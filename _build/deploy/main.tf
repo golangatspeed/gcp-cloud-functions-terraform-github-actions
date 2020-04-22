@@ -25,8 +25,8 @@ data "archive_file" "zip_step" {
   excludes = ["_build", "cmd", ".gitignore", ".DS_Store", "README.md"]
 
   for_each = tomap(var.functions)
-  source_dir = "../../${each.key}"
-  output_path = "./archive/${each.key}.zip"
+  source_dir = "${path.module}/../../${each.key}"
+  output_path = "${path.module}/archive/${each.key}.zip"
 }
 
 // create bucket
