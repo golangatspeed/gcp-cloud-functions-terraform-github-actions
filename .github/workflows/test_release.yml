@@ -40,7 +40,7 @@ jobs:
 
     ##- name: Terraform Init
     ##  run: terraform init -backend-config='credentials=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
-    -
+
     - name: Terraform Plan
       run: terraform plan -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
     - name: Terraform Apply
