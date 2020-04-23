@@ -51,7 +51,6 @@ resource "google_cloudfunctions_function" "function" {
   name        = each.key
   description = "Service: ${var.service}. Function: ${each.key}."
   runtime     = var.runtime
-
   available_memory_mb   = 128
   source_archive_bucket = google_storage_bucket.bucket.name
   source_archive_object = google_storage_bucket_object.archive[each.key].name
@@ -59,15 +58,12 @@ resource "google_cloudfunctions_function" "function" {
   entry_point           = each.value
 }
 
-# IAM entry for all users
+# IAM permissions
 resource "google_cloudfunctions_function_iam_member" "invoker" {
   for_each = tomap(var.functions)
-
   project        = google_cloudfunctions_function.function[each.key].project
   region         = google_cloudfunctions_function.function[each.key].region
   cloud_function = google_cloudfunctions_function.function[each.key].name
-
   role   = "roles/cloudfunctions.invoker"
   member = "allUsers"
 }
-

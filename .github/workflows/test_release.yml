@@ -4,7 +4,7 @@ on: [push] ## we should add 'pull_request' but needs more thought on the secrets
 
 jobs:
 
-  check:
+  checks:
     env:
       GOPATH: ${{ github.workspace }}
       GO111MODULE: off

@@ -33,6 +33,7 @@ variable "functions" {
   description  = "Functions contained in this repository"
   type    = map(string)
   default = {
+    // 'function' = 'entrypoint'
     "hello" = "TestHello"
     "bye" = "TestBye"
   }
