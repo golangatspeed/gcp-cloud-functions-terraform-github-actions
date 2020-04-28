@@ -1,10 +1,4 @@
-provider "google" {
-  version = "3.5.0"
-  credentials = var.credentials_file
-  project = var.project
-  region = var.region
-  zone = var.zone
-}
+
 
 // clean up
 resource "null_resource" "clean_step" {

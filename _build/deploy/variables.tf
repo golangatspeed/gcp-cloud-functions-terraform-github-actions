@@ -38,3 +38,8 @@ variable "functions" {
     "bye" = "TestBye"
   }
 }
+
+// Cloud Run
+variable "domain" {
+  default = "sso.teet.io"
+}

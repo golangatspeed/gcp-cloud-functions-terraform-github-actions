@@ -48,6 +48,8 @@ jobs:
     - name: Terraform Apply
       run: terraform apply -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
 
+    ## we will need docker to build and push the image to GCR for Cloud run proxy
+
     ## run an integration tests step, against the created endpoints (outputs vars from earlier steps? (todo)
 
     ## destroy the stage after successful integration tests (todo)
