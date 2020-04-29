@@ -20,7 +20,7 @@ resource "null_resource" "docker_build" {
   }
 
   provisioner "local-exec" {
-    command = "docker build -t ${var.project}-${var.service} ../proxy"
+    command = "docker build -t ${var.project}-${var.service} ./proxy"
   }
 
 }
