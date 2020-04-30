@@ -1,26 +1,30 @@
 // set up GCR if not aleady
 resource "google_container_registry" "registry" {
+
   provider = google-beta
   project  = var.project
   location = "eu"
+
 }
 
 // log in to GCR with Docker (this is correct)
 resource "null_resource" "docker_auth" {
+
   triggers = {
     always_run = timestamp()
   }
 
   provisioner "local-exec" {
     command = "if test -e \"${var.credentials_file}\"; then cat \"${var.credentials_file}\"; else echo $CREDS; fi | docker login -u _json_key --password-stdin https://${lower(google_container_registry.registry.location)}.gcr.io"
-    //command = "docker login -u _json_key -p '${fileexists(var.credentials_file) ? file(var.credentials_file) : $secrets.gcp_service_account}' https://${lower(google_container_registry.registry.location)}.gcr.io"
   }
 
   depends_on = [google_container_registry.registry]
+
 }
 
 // build the docker image
 resource "null_resource" "docker_build" {
+
   triggers = {
     always_run = timestamp()
   }
@@ -42,6 +46,7 @@ resource "null_resource" "docker_tag" {
   }
 
   depends_on = [null_resource.docker_build]
+
 }
 
 resource "null_resource" "docker_push" {
@@ -59,6 +64,7 @@ resource "null_resource" "docker_push" {
 }
 
 resource "google_cloud_run_service" "my-service" {
+
   name     = "my-service"
   location = "us-central1"
 
@@ -84,6 +90,7 @@ resource "google_cloud_run_service" "my-service" {
 }
 
 resource "google_cloud_run_domain_mapping" "my-service" {
+
   location = "us-central1"
   name     = "sso.machinely.co.uk"
 
@@ -96,16 +103,21 @@ resource "google_cloud_run_domain_mapping" "my-service" {
   }
 
   depends_on = [google_cloud_run_service.my-service]
+
 }
 
 resource "google_cloud_run_service_iam_member" "allUsers" {
+
   service  = google_cloud_run_service.my-service.name
   location = google_cloud_run_service.my-service.location
   role     = "roles/run.invoker"
   member   = "allUsers"
+
 }
 
 output "url" {
+
   value = google_cloud_run_service.my-service.status[0].url
+
 }
 
