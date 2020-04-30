@@ -4,7 +4,7 @@ Current status: rapid brain-dump, said I'd do this today, but I expect this READ
 
 ## Starter repository
 
-![Test & Release](https://github.com/teetlab/sso/workflows/Test%20&%20Release/badge.svg)
+![Test & Release](https://github.com/teetlab/sso/workflows/Test%20&%20Release/badge.svg) | [![DeepSource](https://static.deepsource.io/deepsource-badge-light-mini.svg)](https://deepsource.io/gh/teetlab/sso/?ref=repository-badge)
 
 If you want to deploy GCP Cloud Functions, using  Terraform for Infrastructure management 
 and Github Actions for your CI/CD pipeline, like I did, this might get you going a bit faster.
