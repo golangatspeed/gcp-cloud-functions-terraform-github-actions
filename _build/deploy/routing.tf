@@ -12,8 +12,8 @@ resource "null_resource" "docker_auth" {
   }
 
   provisioner "local-exec" {
-    //"cat \"${var.credentials_file}\" | docker login -u _json_key --password-stdin https://${lower(google_container_registry.registry.location)}.gcr.io"
-    command = "docker login -u _json_key -p '${fileexists(var.credentials_file) ? file(var.credentials_file) : var.credentials_file}' https://${lower(google_container_registry.registry.location)}.gcr.io"
+    command = "if test -e \"${var.credentials_file}\"; then cat \"${var.credentials_file}\"; else echo $secrets.gcp_service_account; fi| docker login -u _json_key --password-stdin https://${lower(google_container_registry.registry.location)}.gcr.io"
+    //command = "docker login -u _json_key -p '${fileexists(var.credentials_file) ? file(var.credentials_file) : $secrets.gcp_service_account}' https://${lower(google_container_registry.registry.location)}.gcr.io"
   }
 
   depends_on = [google_container_registry.registry]
