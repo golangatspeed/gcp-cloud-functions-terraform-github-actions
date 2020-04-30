@@ -9,6 +9,7 @@ jobs:
       GOPATH: ${{ github.workspace }}
       GO111MODULE: off
       TF_MODULE_PATH: ./src/github.com/${{ github.repository }}/_build/deploy
+      CREDS: ${{ secrets.gcp_service_account }}
 
     strategy:
       matrix:
