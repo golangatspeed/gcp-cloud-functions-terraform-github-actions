@@ -7,6 +7,9 @@ resource "google_container_registry" "registry" {
 
 // log in to GCR with Docker (this is correct)
 resource "null_resource" "docker_auth" {
+  triggers = {
+    always_run = timestamp()
+  }
   provisioner "local-exec" {
     command = "cat \"${var.credentials_file}\" | docker login -u _json_key --password-stdin https://${lower(google_container_registry.registry.location)}.gcr.io"
   }
