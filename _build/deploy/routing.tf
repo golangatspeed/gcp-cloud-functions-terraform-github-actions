@@ -10,10 +10,12 @@ resource "null_resource" "docker_auth" {
   triggers = {
     always_run = timestamp()
   }
+
   provisioner "local-exec" {
     //command = "cat \"${var.credentials_file}\" | docker login -u _json_key --password-stdin https://${lower(google_container_registry.registry.location)}.gcr.io"
-    command = "docker login -u _json_key -p '${file(var.credentials_file)}' https://${lower(google_container_registry.registry.location)}.gcr.io"
+    command = "docker login -u _json_key -p '${fileexists(var.credentials_file) ? file(var.credentials_file) : var.credentials_file}' https://${lower(google_container_registry.registry.location)}.gcr.io"
   }
+
   depends_on = [google_container_registry.registry]
 }
 
