@@ -32,6 +32,12 @@ func ProxyRequest(w http.ResponseWriter, r *http.Request){
 	var endpoint *url.URL
 	var err error
 
+	// nothing on root calls for this service
+	if r.RequestURI == "/" {
+		w.WriteHeader(http.StatusNotFound)
+		return
+	}
+
 	if endpoint, err = url.Parse(fmt.Sprintf(
 		"http://%s-%s.cloudfunctions.net%s", gcp_cf_region, gcp_cf_project, r.RequestURI)); err != nil {
 		log.Println("failed to parse endpoint", err)
