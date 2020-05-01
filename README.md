@@ -1,4 +1,4 @@
-# GCP Cloud functions written in Go, with infrastructure thanks to Terraform and CI/CD courtesy of Github actions
+# GCP Cloud functions written in Go, with infrastructure via Terraform and CI/CD on Github actions
 
 Current status: rapid brain-dump, said I'd do this today, but I expect this README is a long way off perfect
 
