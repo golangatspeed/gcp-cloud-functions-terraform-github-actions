@@ -61,4 +61,4 @@ the contents of the file in your GCP service account's JSON credentials file.
 
 ## License
 
-Full MIT. Fill your boots, but please upstream anything nice ;)
+Full MIT, but lease upstream anything nice ;)
