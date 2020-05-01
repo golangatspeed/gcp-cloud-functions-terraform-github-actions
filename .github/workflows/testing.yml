@@ -1,6 +1,9 @@
-name: Test & Release
+name: Unit Test
 
-on: [push] ## we should add 'pull_request' but needs more thought on the secrets
+on:
+  push:
+    branches:
+      - development
 
 jobs:
 
@@ -57,5 +60,3 @@ jobs:
     ##  run: terraform destroy -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
 
     ## deploy to production (todo)
-
-    ## log/notify wherever/whoever (todo)

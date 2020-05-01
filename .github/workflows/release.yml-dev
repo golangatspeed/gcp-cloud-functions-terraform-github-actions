@@ -1,0 +1,48 @@
+name: Release
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - production
+
+name: Merge PR
+on:
+  pull_request:
+    types: [closed]
+jobs:
+  merge-PR:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+jobs:
+  release:
+    if github.event.pull_request.merged == true
+    env:
+      GOPATH: ${{ github.workspace }}
+      GO111MODULE: off
+      TF_MODULE_PATH: ./src/github.com/${{ github.repository }}/_build/deploy
+      CREDS: ${{ secrets.gcp_service_account }}
+
+    strategy:
+      matrix:
+        go-version: [1.13.x]
+        platform: [ubuntu-latest]
+
+    runs-on: ${{ matrix.platform }}
+
+    steps:
+
+      ## release with terraform
+      - name: Install Terraform
+        uses: little-core-labs/install-terraform@v1
+        with:
+          version: 0.12.24
+
+      - name: Terraform Init
+        run: terraform init -backend-config='credentials=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+
+      - name: Terraform Plan
+        run: terraform plan -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
+
+      - name: Terraform Apply
+        run: terraform apply -auto-approve -var='credentials_file=${{ secrets.gcp_service_account }}' ${{ env.TF_MODULE_PATH }}
